@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>洗濯表示クイズ</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 共通動画リンクコンポーネント -->
+  <div id="video-links-template" class="video-links" style="display: none;">
+    <div class="video-section-title">ラジオ七輪</div>
+    <div class="video-links-container">
+      <a href="https://www.youtube.com/channel/UCNRG_yf91IfQPIvxgpjMjnQ" target="_blank" rel="noopener noreferrer" class="video-link youtube-link">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M23.498 6.186a2.999 2.999 0 0 0-2.108-2.125C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.39.516A2.999 2.999 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a2.999 2.999 0 0 0 2.108 2.125c1.885.516 9.39.516 9.39.516s7.505 0 9.39-.516a2.999 2.999 0 0 0 2.108-2.125C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.75 15.568V8.432L15.5 12l-5.75 3.568z"/>
+        </svg>
+        <span>YouTube</span>
+        <div class="video-description">ラジオ七輪 放送アーカイブ</div>
+      </a>
+      <a href="https://live.nicovideo.jp/watch/user/55255188" target="_blank" rel="noopener noreferrer" class="video-link nicovideo-link">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+        </svg>
+        <span>ニコニコ動画</span>
+        <div class="video-description">ラジオ七輪 生放送</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- 共通クレジットコンポーネント -->
+  <div id="credit-template" class="credit-section" style="display: none;">
+    <div class="credit-content">
+      <div class="credit-title">クレジット</div>
+      <div class="credit-item">
+        <div class="credit-label">参考：</div>
+        <div class="credit-text">消費者庁 新しい洗濯表示</div>
+        <div class="credit-url">
+          <a href="https://www.caa.go.jp/policies/policy/representation/household_goods/laundry_symbols.html" target="_blank" rel="noopener noreferrer">
+            https://www.caa.go.jp/policies/policy/representation/household_goods/laundry_symbols.html
+          </a>
+        </div>
+      </div>
+      <div class="credit-item">
+        <div class="credit-label">アイコン提供：</div>
+        <div class="credit-text">ICOMPO －商用フリーのアイコン素材サイト－</div>
+        <div class="credit-url">
+          <a href="https://www.icompo-free-icons.com/?icon_category=laundry-symbol" target="_blank" rel="noopener noreferrer">
+            https://www.icompo-free-icons.com/?icon_category=laundry-symbol
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- タイトル画面 -->
+  <div id="title-screen" class="screen">
+    <div class="decoration"></div>
+    <div class="decoration"></div>
+    <h1>洗濯表示クイズ</h1>
+    <button id="start-btn" class="main-btn">スタート</button>
+    <div class="video-links-placeholder"></div>
+  </div>
+
+  <!-- 説明画面 -->
+  <div id="explanation-screen" class="screen" style="display: none;">
+    <div class="slide-content">
+      <div id="explanation-text"></div>
+    </div>
+    <div class="slide-controls">
+      <button id="explanation-prev-btn" class="slide-btn">前へ</button>
+      <button id="explanation-next-btn" class="slide-btn">次へ</button>
+      <button id="explanation-restart-btn" class="slide-btn" style="display: none;">最初から読む</button>
+    </div>
+    <div class="video-links-placeholder"></div>
+  </div>
+
+  <!-- モード選択画面 -->
+  <div id="mode-screen" class="screen" style="display: none;">
+    <h2>モードを選択してください</h2>
+    <div class="mode-buttons">
+      <button id="full-quiz-btn" class="mode-btn">
+        <div class="mode-title">全問チャレンジ（全43問）</div>
+        <div class="mode-subtitle">全ての問題に挑戦</div>
+      </button>
+      <button id="random-quiz-btn" class="mode-btn">
+        <div class="mode-title">ランダムチャレンジ（全10問）</div>
+        <div class="mode-subtitle">ランダムに選ばれた10問に挑戦</div>
+      </button>
+      <button id="show-all-answers-btn" class="mode-btn answer-list-btn">
+        <div class="mode-title">解答一覧を見る</div>
+        <div class="mode-subtitle">すべての問題と解答を確認</div>
+      </button>
+    </div>
+    <button id="back-to-title-btn" class="back-btn">タイトルに戻る</button>
+    <div class="video-links-placeholder"></div>
+  </div>
+
+  <!-- 説明確認画面 -->
+  <div id="explanation-confirm-screen" class="screen" style="display: none;">
+    <h2>はじめに</h2>
+    <div id="selected-mode-info"></div>
+    <div class="confirm-buttons">
+      <button id="read-explanation-btn" class="main-btn">はい</button>
+      <button id="skip-explanation-btn" class="main-btn secondary">いいえ</button>
+    </div>
+    <button id="back-to-mode-btn" class="back-btn">モード選択に戻る</button>
+    <div class="video-links-placeholder"></div>
+  </div>
+
+  <!-- クイズ画面 -->
+  <div id="quiz-area" class="screen" style="display: none;">
+    <div id="quiz-container">
+      <div id="question-number"></div>
+      <img id="quiz-image" src="" alt="洗濯表示" />
+      <div id="choices"></div>
+      <div id="result"></div>
+      
+      <div id="explanation-box" class="explanation-container" style="display: none;">
+        <h3>解説</h3>
+        <p id="explanation-content"></p>
+      </div>
+      
+      <button id="next-btn" class="quiz-btn" style="display: none;">次の問題</button>
+    </div>
+    <div class="video-links-placeholder"></div>
+  </div>
+
+  <!-- 結果画面 -->
+  <div id="result-screen" class="screen" style="display: none;">
+    <div class="completion-message">お疲れ様でした！</div>
+    <div class="score-display">
+      <div class="score-number" id="final-score">0</div>
+      <div class="score-text">正解数</div>
+      <div class="score-percentage" id="score-percentage">0%</div>
+    </div>
+    <div class="title-display">
+      <div class="title-label">あなたの称号</div>
+      <div class="title-name" id="title-name">洗濯表示初心者</div>
+    </div>
+    <div class="result-comment" id="result-comment">
+      まずは基本的な洗濯表示から覚えていきましょう！
+    </div>
+    <div class="result-buttons">
+      <button id="restart-btn" class="result-btn">もう一度挑戦</button>
+      <button id="show-answer-list-btn" class="result-btn secondary">解答一覧を見る</button>
+      <button id="share-twitter-btn" class="result-btn share-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+        </svg>
+        結果をXに投稿
+      </button>
+      <button id="back-to-title-from-result-btn" class="result-btn tertiary">タイトルに戻る</button>
+    </div>
+    
+    <div class="promotion-message">
+      <div class="decoration-top"></div>
+      <p>オタクアマチュアラジオ「ラジオ七輪」はニコニコ生放送で毎週（土）21:00～放送中です！よろしくお願いします！</p>
+      <div class="decoration-bottom"></div>
+    </div>
+
+    <div class="credit-placeholder-with-video"></div>
+  </div>
+
+  <!-- 解答一覧画面 -->
+  <div id="answer-list-screen" class="screen" style="display: none;">
+    <h2>解答一覧</h2>
+    <div id="answer-list-container"></div>
+    <button id="back-to-mode-from-answer-btn" class="back-btn">モード選択に戻る</button>
+    <div class="credit-placeholder"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
