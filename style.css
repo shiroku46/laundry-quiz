@@ -1885,4 +1885,27 @@ button:hover {
   }
 }
 
-/* ...existing code... */
+/* タイトル画面専用の動画リンクスタイル */
+#title-screen .video-section-title {
+  color: white !important;
+  font-weight: bold;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+#title-screen .video-link,
+#title-screen .video-link span {
+  color: white !important;
+}
+
+#title-screen .video-description {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+#title-screen .video-link:hover,
+#title-screen .video-link:hover span {
+  color: white !important;
+}
+
+#title-screen .video-link:hover .video-description {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
